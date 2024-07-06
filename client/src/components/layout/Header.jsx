@@ -6,7 +6,7 @@ import {
     Notifications as NotificationsIcon,
     Search as SearchIcon
 } from '@mui/icons-material'
-import { AppBar, Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material'
+import { AppBar, Backdrop, Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material'
 import React, { Suspense, lazy, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { orange } from '../../constants/color'
@@ -31,10 +31,11 @@ const Header = () => {
     const openNotification = () => {
         setIsNotification((prev) => !prev)
     }
+    const navigateToGroup = () => navigate("/groups")
     const logoutHandler = () => {
         console.log("Logout")
     }
-    const navigateToGroup = () => navigate("/groups")
+    
     return (
         <>
         <Box
@@ -84,8 +85,22 @@ const Header = () => {
         </Box>
         {
             isSearch && (
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<Backdrop open/>}>
                     <SearchDialog />
+                </Suspense>
+            )
+        }
+        {
+            isNewGroup && (
+                <Suspense fallback={<Backdrop open/>}>
+                    <NewGroupDialog />
+                </Suspense>
+            )
+        }
+        {
+            isNotification && (
+                <Suspense fallback={<Backdrop open/>}>
+                    <NotificationDialog />
                 </Suspense>
             )
         }
